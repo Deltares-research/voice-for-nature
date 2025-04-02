@@ -2,7 +2,7 @@
   <div>
     <TresCanvas window-size clear-color="#82DBC5" ref="canvas">
       <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" :look-at="[150, 0, 100]"/>
-      <OrbitControls :target="currentLocation.position" :enablePan="true" :enableZoom="false"/>
+      <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
       <TresGridHelper />
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
@@ -28,7 +28,7 @@
         <Environment
           ref = "env"
           :background="true"
-          :files=currenLocationFiles      
+          :files=currenLocationFiles 
         />
       </Suspense>
       <TresScene
@@ -79,8 +79,8 @@ export default {
           rotation: 1.6
         }, {
           id: "loc2_pavilion",
-          position: [180, 0, 0],
-          camera: [179, 0, 1],
+          position: [100, -5, 20],
+          camera: [99, 0, 19],
           rotation: 1.7
         }, {
           id: "loc3_tetra",
