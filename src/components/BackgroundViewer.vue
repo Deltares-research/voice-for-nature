@@ -79,9 +79,9 @@ export default {
           rotation: 1.6
         }, {
           id: "loc2_pavilion",
-          position: [0, 0, 90],
-          camera: [-1, 0, 90],
-          rotation: 3.0
+          position: [180, 0, 0],
+          camera: [179, 0, 1],
+          rotation: 1.7
         }, {
           id: "loc3_tetra",
           position: [30, 0, 180],
