@@ -2,7 +2,7 @@
   <div>
     <TresCanvas window-size clear-color="#82DBC5" ref="canvas">
       <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" :look-at="[150, 0, 100]"/>
-      <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
+      <OrbitControls :target="currentLocation.position" :enablePan="true" :enableZoom="false"/>
       <TresGridHelper />
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
@@ -28,7 +28,7 @@
         <Environment
           ref = "env"
           :background="true"
-          :files="`../360photos/${currentLocation.id}.hdr`"
+          :files=currenLocationFiles      
         />
       </Suspense>
       <TresScene
@@ -114,6 +114,16 @@ export default {
   computed: {
     currentLocation () {
       return this.locations.find(loc => loc.id === this.currentId)
+    },
+    currenLocationFiles () {
+      return [
+        `../360photos/${this.currentLocation.id}/px.jpg`,
+        `../360photos/${this.currentLocation.id}/nx.jpg`,
+        `../360photos/${this.currentLocation.id}/py.jpg`,
+        `../360photos/${this.currentLocation.id}/ny.jpg`,
+        `../360photos/${this.currentLocation.id}/pz.jpg`,
+        `../360photos/${this.currentLocation.id}/nz.jpg`
+      ]
     }
   },
   mounted () {
