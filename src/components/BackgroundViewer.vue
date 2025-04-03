@@ -3,7 +3,7 @@
     <TresCanvas window-size clear-color="#82DBC5" ref="canvas">
       <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" :look-at="[150, 0, 100]"/>
       <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
-      <TresGridHelper />
+      <TresGridHelper :size="500" :divisions="50" :colorCenterLine="'black'" :colorGrid="'black'" />
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
           <Text3D :font="fontPath" text="Chat" @click="$router.push('/chat')" :size="1" />
@@ -76,39 +76,39 @@ export default {
           id: "loc1_road",
           position: [40, 0, 0],
           camera: [39, 0, -1],
-          rotation: 1.6
+          rotation: 0
         }, {
           id: "loc2_pavilion",
-          position: [100, -5, 20],
-          camera: [99, 0, 19],
-          rotation: 1.7
+          position: [0, 0, 90],
+          camera: [-1, 0, 90],
+          rotation: 1.5
         }, {
           id: "loc3_tetra",
           position: [30, 0, 180],
           camera: [29, 0, 181],
-          rotation: 3.8
+          rotation: 2
         }, {
           id: "loc4_farside",
           position: [110, 0, 250],
           camera: [110, 0, 251],
-          rotation: 4.3
+          rotation: 3
         }, {
           id: "loc5_bench",
           position: [160, 0, 190],
           camera: [161, 0, 190],
-          rotation: 5.7
+          rotation: 4.2
         }, {
           id: "loc6_sluice",
           position: [160, 0, 80],
           camera: [161, 0, 80],
-          rotation: 0.3
+          rotation: 4.95
         }, {
           id: "loc7_other",
           position: [120, 0, 40],
           camera: [121, 0, 39],
-          rotation: 1.55
+          rotation: 0
         }
-      ]
+      ] 
     }
   },
   computed: {
