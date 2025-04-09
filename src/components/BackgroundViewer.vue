@@ -91,12 +91,12 @@ export default {
           id: "loc4_farside",
           position: [110, 0, 250],
           camera: [110, 0, 251],
-          rotation: 3
+          rotation: 2.5
         }, {
           id: "loc5_bench",
           position: [160, 0, 190],
           camera: [161, 0, 190],
-          rotation: 4.2
+          rotation: 4
         }, {
           id: "loc6_sluice",
           position: [160, 0, 80],
