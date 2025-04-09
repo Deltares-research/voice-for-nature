@@ -1,9 +1,9 @@
 <template>
   <div>
+    <p>Zoom level: {{zoom}}</p>
     <TresCanvas window-size clear-color="#82DBC5" ref="canvas">
-      <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" :look-at="[150, 0, 100]"/>
-      <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
-      <TresGridHelper />
+      <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera"  :zoom="zoom" :look-at="[150, 0, 100]"/>
+      <OrbitControls :target="currentLocation.position" :enableZoom="false"/>
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
           <Text3D :font="fontPath" text="Chat" @click="$router.push('/chat')" :size="1" />
@@ -69,6 +69,7 @@ export default {
   },
   data () {
     return {
+      zoom: 1, // initial zoom level
       fontPath: 'https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json',
       currentId: "loc1_road",
       locations: [
@@ -114,11 +115,17 @@ export default {
   computed: {
     currentLocation () {
       return this.locations.find(loc => loc.id === this.currentId)
-    }
+    },
+    
   },
   mounted () {
     console.log(this.$refs)
     this.rotateEnvironment(this.currentLocation.rotation)
+    window.addEventListener('wheel', this.handleScroll)
+    console.log(this.zoom)
+  },
+  beforeUnmount() {
+    window.removeEventListener('wheel', this.handleScroll)
   },
   methods: {
     onPointerEnter(ev) {
@@ -138,6 +145,17 @@ export default {
     },
     rotateEnvironment(rad) {
       this.$refs.scene.parent.backgroundRotation.y = rad
+    },
+    handleScroll(event) {
+      if (event.deltaY < 0){
+      this.zoom += 0.1;
+      }
+      else {
+        this.zoom -= 0.1;
+
+      }
+      console.log("zoom level: ", this.zoom)
+
     }
   }
 }
