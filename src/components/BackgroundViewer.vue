@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      zoom: 1, // initial zoom level
+      zoom: 0.8, // initial zoom level
       fontPath: 'https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json',
       currentId: "loc1_road",
       locations: [
