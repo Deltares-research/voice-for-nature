@@ -28,7 +28,7 @@
         <Environment
           ref = "env"
           :background="true"
-          :files="`../360photos/${currentLocation.id}.hdr`"
+          :files=currenLocationFiles 
         />
       </Suspense>
       <TresScene
@@ -77,46 +77,55 @@ export default {
           id: "loc1_road",
           position: [40, 0, 0],
           camera: [39, 0, -1],
-          rotation: 1.6
+          rotation: 0
         }, {
           id: "loc2_pavilion",
           position: [0, 0, 90],
           camera: [-1, 0, 90],
-          rotation: 3.0
+          rotation: 1.5
         }, {
           id: "loc3_tetra",
           position: [30, 0, 180],
           camera: [29, 0, 181],
-          rotation: 3.8
+          rotation: 2
         }, {
           id: "loc4_farside",
           position: [110, 0, 250],
           camera: [110, 0, 251],
-          rotation: 4.3
+          rotation: 2.5
         }, {
           id: "loc5_bench",
           position: [160, 0, 190],
           camera: [161, 0, 190],
-          rotation: 5.7
+          rotation: 4
         }, {
           id: "loc6_sluice",
           position: [160, 0, 80],
           camera: [161, 0, 80],
-          rotation: 0.3
+          rotation: 4.95
         }, {
           id: "loc7_other",
           position: [120, 0, 40],
           camera: [121, 0, 39],
-          rotation: 1.55
+          rotation: 0
         }
-      ]
+      ] 
     }
   },
   computed: {
     currentLocation () {
       return this.locations.find(loc => loc.id === this.currentId)
     },
-    
+    currenLocationFiles () {
+      return [
+        `../360photos/${this.currentLocation.id}/px.jpg`,
+        `../360photos/${this.currentLocation.id}/nx.jpg`,
+        `../360photos/${this.currentLocation.id}/py.jpg`,
+        `../360photos/${this.currentLocation.id}/ny.jpg`,
+        `../360photos/${this.currentLocation.id}/pz.jpg`,
+        `../360photos/${this.currentLocation.id}/nz.jpg`
+      ]
+    }
   },
   mounted () {
     console.log(this.$refs)
