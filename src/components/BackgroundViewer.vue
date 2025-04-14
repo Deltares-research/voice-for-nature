@@ -5,17 +5,17 @@
       <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
       <TresGridHelper :size="500" :divisions="50" :colorCenterLine="'black'" :colorGrid="'black'" />
       <Suspense>
-        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera"  @click="$router.replace('/chat')">
+        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.replace('/chat')">
           <Text3D :font="fontPath" text="Chat" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera" @click="$router.push('/stories/measurements')">
+        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/measurements')">
           <Text3D :font="fontPath" text="Measurements"  :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera" @click="$router.push('/stories/history')">
+        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/history')">
           <Text3D :font="fontPath" text="History"  :size="2" />
         </TresMesh>
       </Suspense>
@@ -23,7 +23,6 @@
         
         <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/birds')">
           <Text3D :font="fontPath" text="Birds" :size="2" />
-          <Outline :thickness="7.5" color="#fbb03b" />
         </TresMesh>
       </Suspense>
       <Suspense>
@@ -57,7 +56,7 @@
 </template>
 
 <script>
-import { OrbitControls, Environment, Text3D, Outline} from '@tresjs/cientos'
+import { OrbitControls, Environment, Text3D} from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
 
 export default {
@@ -67,8 +66,8 @@ export default {
     TresCanvas,
     OrbitControls,
     Environment,
-    Text3D,
-    Outline
+    Text3D
+    
   },
   data () {
     return {
