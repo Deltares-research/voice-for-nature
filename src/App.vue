@@ -12,7 +12,7 @@
             :key="item"
             :text="item"
             :value="item"
-            :to="`./${item}`"
+            :to="`/${item}`"
           ></v-tab>
         </v-tabs>
         <v-tabs-window class="rel-height">

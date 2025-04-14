@@ -6,22 +6,22 @@
       <TresGridHelper :size="500" :divisions="50" :colorCenterLine="'black'" :colorGrid="'black'" />
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Chat" @click="$router.push('/chat')" :size="1" />
+          <Text3D :font="fontPath" text="Chat" @click="$router.replace('/chat')" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
         <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Measurements" @click="$router.push('/stories/measurements')" :size="1" />
+          <Text3D :font="fontPath" text="Measurements" @click="$router.push('/stories/measurements')" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
         <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="History" @click="$router.push('/stories/history')" :size="1" />
+          <Text3D :font="fontPath" text="History" @click="$router.push('/stories/history')" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
         <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Birds" @click="$router.push('/stories/birds')" :size="1" />
+          <Text3D :font="fontPath" text="Birds" @click="$router.push('/stories/birds')" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
