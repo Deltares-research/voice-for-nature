@@ -20,7 +20,6 @@ export default {
   
   methods: {
     getStory() {
-      console.log(this.$route)
       let story = _.get(this.$route, 'params.storyName', 'fallback')
       if (story === "stories") {
         story = this.fallback_story

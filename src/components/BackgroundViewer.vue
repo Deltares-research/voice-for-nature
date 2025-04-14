@@ -5,23 +5,25 @@
       <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
       <TresGridHelper :size="500" :divisions="50" :colorCenterLine="'black'" :colorGrid="'black'" />
       <Suspense>
-        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Chat" @click="$router.replace('/chat')" :size="2" />
+        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera"  @click="$router.replace('/chat')">
+          <Text3D :font="fontPath" text="Chat" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Measurements" @click="$router.push('/stories/measurements')" :size="2" />
+        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera" @click="$router.push('/stories/measurements')">
+          <Text3D :font="fontPath" text="Measurements"  :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="History" @click="$router.push('/stories/history')" :size="2" />
+        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera" @click="$router.push('/stories/history')">
+          <Text3D :font="fontPath" text="History"  :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Birds" @click="$router.push('/stories/birds')" :size="2" />
+        
+        <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/birds')">
+          <Text3D :font="fontPath" text="Birds" :size="2" />
+          <Outline :thickness="7.5" color="#fbb03b" />
         </TresMesh>
       </Suspense>
       <Suspense>
@@ -55,7 +57,7 @@
 </template>
 
 <script>
-import { OrbitControls, Environment, Text3D} from '@tresjs/cientos'
+import { OrbitControls, Environment, Text3D, Outline} from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
 
 export default {
@@ -65,7 +67,8 @@ export default {
     TresCanvas,
     OrbitControls,
     Environment,
-    Text3D
+    Text3D,
+    Outline
   },
   data () {
     return {
@@ -127,7 +130,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$refs)
     this.rotateEnvironment(this.currentLocation.rotation)
   },
   methods: {
@@ -142,16 +144,28 @@ export default {
       }
     },
     onClick(locationId) {
-      console.log(locationId)
       this.currentId = locationId
       this.rotateEnvironment(this.currentLocation.rotation)
     },
     rotateEnvironment(rad) {
       this.$refs.scene.parent.backgroundRotation.y = rad
+    },
+    changeCursor(ev) {
+      ev.target.style.cursor = "pointer";
+    },
+    resetCursor(ev) {
+      ev.target.style.cursor = "default";
     }
+
   }
 }
 </script>
 
 <style>
+
+.clickable {
+  cursor: pointer;
+}
+
+
 </style>
