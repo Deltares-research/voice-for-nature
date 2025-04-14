@@ -40,6 +40,17 @@ export default {
     folded: true
   }),
 
+  watch: {
+    $route(to) {
+      if (to.path.includes("stories")) {
+        this.tab = "stories"
+      }
+      else if (to.path.includes("chat")) {
+        this.tab = "chat"
+      }
+    }
+  },
+
   mounted () {
   }
 }
