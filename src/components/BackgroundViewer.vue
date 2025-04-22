@@ -115,10 +115,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs)
+    // Debugging statement removed: console.log(this.$refs)
     this.rotateEnvironment(this.currentLocation.rotation)
     window.addEventListener('wheel', this.handleScroll)
-    console.log(this.zoom)
+    // Debugging statement removed: console.log(this.zoom)
   },
   beforeUnmount() {
     window.removeEventListener('wheel', this.handleScroll)
