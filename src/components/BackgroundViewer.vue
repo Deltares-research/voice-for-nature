@@ -36,6 +36,13 @@
         <TresDirectionalLight
           :position="[0, 8, 4]"
         />
+        <Suspense>
+          <GLTFModel
+            path="../3dmodels/Fish.glb"
+            :position="[250, -250, 600]"
+            :scale="[1, 1, 1]"
+          />
+        </Suspense>
         <TresMesh
           v-for="location in locations"
           :key="location.id"
@@ -55,7 +62,7 @@
 </template>
 
 <script>
-import { OrbitControls, Environment, Text3D} from '@tresjs/cientos'
+import { OrbitControls, Environment, Text3D, GLTFModel } from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
 
 export default {
@@ -65,7 +72,8 @@ export default {
     TresCanvas,
     OrbitControls,
     Environment,
-    Text3D
+    Text3D,
+    GLTFModel
   },
   data () {
     return {
