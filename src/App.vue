@@ -48,7 +48,7 @@ export default {
         if (!to.path.endsWith("/stories")) {
           const pathArray = to.path.split("/")
           
-          this.prior_story= pathArray.at([-1])
+          this.prior_story= pathArray.at(-1)
         }
         if (this.prior_story) {
           this.$router.push(`/stories/${this.prior_story}`)
