@@ -1,9 +1,9 @@
 <template>
   <div>
     <TresCanvas window-size clear-color="#82DBC5" ref="canvas">
-      <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" :look-at="[150, 0, 100]"/>
-      <OrbitControls :target="currentLocation.position" :enablePan="false" :enableZoom="false"/>
-      <TresGridHelper :size="500" :divisions="50" :colorCenterLine="'black'" :colorGrid="'black'" />
+      <TresPerspectiveCamera visible ref="camera" :position="currentLocation.camera" updateMatrixProjection :zoom="zoom"
+        :look-at="[150, 0, 100]" />
+      <OrbitControls :target="currentLocation.position" :enableZoom="false" />
       <Suspense>
         <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.replace('/chat')">
           <Text3D :font="fontPath" text="Chat" :size="2" />
@@ -26,27 +26,13 @@
         </TresMesh>
       </Suspense>
       <Suspense>
-        <Environment
-          ref = "env"
-          :background="true"
-          :files=currenLocationFiles 
-        />
+        <Environment ref="env" :background="true" :files=currenLocationFiles />
       </Suspense>
-      <TresScene
-        ref="scene">
-        <TresDirectionalLight
-          :position="[0, 8, 4]"
-        />
-        <TresMesh
-          v-for="location in locations"
-          :key="location.id"
-          :position="location.position"
-          :ref="location.id"
-          :visible="location.id !== currentId"
-          @click="onClick(location.id)"
-          @pointer-enter="onPointerEnter"
-          @pointer-leave="onPointerLeave"
-          >
+      <TresScene ref="scene">
+        <TresDirectionalLight :position="[0, 8, 4]" />
+        <TresMesh v-for="location in locations" :key="location.id" :position="location.position" :ref="location.id"
+          :visible="location.id !== currentId" @click="onClick(location.id)" @pointer-enter="onPointerEnter"
+          @pointer-leave="onPointerLeave">
           <TresSphereGeometry />
           <TresMeshToonMaterial color="#FBB03B" />
         </TresMesh>
@@ -56,7 +42,7 @@
 </template>
 
 <script>
-import { OrbitControls, Environment, Text3D} from '@tresjs/cientos'
+import { OrbitControls, Environment, Text3D } from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
 
 export default {
@@ -69,8 +55,9 @@ export default {
     Text3D
     
   },
-  data () {
+  data() {
     return {
+      zoom: 0.8, // initial zoom level
       fontPath: 'https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json',
       currentId: "loc1_road",
       locations: [
@@ -110,14 +97,15 @@ export default {
           camera: [121, 0, 39],
           rotation: 0
         }
-      ] 
+      ]
     }
   },
+
   computed: {
-    currentLocation () {
+    currentLocation() {
       return this.locations.find(loc => loc.id === this.currentId)
     },
-    currenLocationFiles () {
+    currenLocationFiles() {
       return [
         `../360photos/${this.currentLocation.id}/px.jpg`,
         `../360photos/${this.currentLocation.id}/nx.jpg`,
@@ -130,6 +118,11 @@ export default {
   },
   mounted () {
     this.rotateEnvironment(this.currentLocation.rotation)
+    window.addEventListener('wheel', this.handleScroll)
+    // Debugging statement removed: console.log(this.zoom)
+  },
+  beforeUnmount() {
+    window.removeEventListener('wheel', this.handleScroll)
   },
   methods: {
     onPointerEnter(ev) {
@@ -153,7 +146,23 @@ export default {
       ev.target.style.cursor = "pointer";
     },
     resetCursor(ev) {
-      ev.target.style.cursor = "default";
+      ev.target.style.cursor = "default";},
+    handleScroll(event) {
+      if (event.deltaY < 0) {
+        this.zoom += 0.1;
+      }
+      else {
+        if (this.zoom < 0.11) {
+          this.zoom = 0.1
+        }
+        else {
+          this.zoom -= 0.1;
+        }
+      }
+      this.$refs.camera.updateProjectionMatrix()
+
+      console.log("zoom level: ", this.zoom)
+
     }
 
   }
