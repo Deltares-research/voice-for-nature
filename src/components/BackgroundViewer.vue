@@ -36,7 +36,7 @@
         <TresDirectionalLight
           :position="[0, 8, 4]"
         />
-        <Suspense>
+        <Suspense v-if="currentId === 'loc1_road'">
           <GLTFModel
             path="../3dmodels/Fish.glb"
             :position="[250, -250, 600]"
