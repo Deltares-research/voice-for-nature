@@ -39,8 +39,15 @@
         <Suspense v-if="currentId === 'loc1_road'">
           <GLTFModel
             path="../3dmodels/Fish.glb"
-            :position="[250, -250, 600]"
-            :scale="[1, 1, 1]"
+            :position="[350, -220, 620]"
+            :scale="[20, 20, 20]"
+          />
+        </Suspense>
+        <Suspense v-if="currentId === 'loc2_pavilion'">
+          <GLTFModel
+            path="../3dmodels/Frog.glb"
+            :position="[200, -70, 120]"
+            :scale="[380, 380, 380]"
           />
         </Suspense>
         <TresMesh
