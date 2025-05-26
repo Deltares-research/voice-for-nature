@@ -5,23 +5,24 @@
         :look-at="[150, 0, 100]" />
       <OrbitControls :target="currentLocation.position" :enableZoom="false" />
       <Suspense>
-        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Chat" @click="$router.push('/chat')" :size="1" />
+        <TresMesh :position="[20, 0, 20]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.replace('/chat')">
+          <Text3D :font="fontPath" text="Chat" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Measurements" @click="$router.push('/stories/measurements')" :size="1" />
+        <TresMesh :position="[100, 0, 100]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/measurements')">
+          <Text3D :font="fontPath" text="Measurements"  :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="History" @click="$router.push('/stories/history')" :size="1" />
+        <TresMesh :position="[50, 0, 200]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/history')">
+          <Text3D :font="fontPath" text="History"  :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
-        <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera">
-          <Text3D :font="fontPath" text="Birds" @click="$router.push('/stories/birds')" :size="1" />
+        
+        <TresMesh :position="[50, 20, 50]" :look-at="currentLocation.camera" @pointer-move="changeCursor" @pointer-leave="resetCursor" @click="$router.push('/stories/birds')">
+          <Text3D :font="fontPath" text="Birds" :size="2" />
         </TresMesh>
       </Suspense>
       <Suspense>
@@ -51,7 +52,8 @@ export default {
     TresCanvas,
     OrbitControls,
     Environment,
-    Text3D,
+    Text3D
+    
   },
   data() {
     return {
@@ -114,8 +116,7 @@ export default {
       ]
     }
   },
-  mounted() {
-    // Debugging statement removed: console.log(this.$refs)
+  mounted () {
     this.rotateEnvironment(this.currentLocation.rotation)
     window.addEventListener('wheel', this.handleScroll)
     // Debugging statement removed: console.log(this.zoom)
@@ -135,13 +136,17 @@ export default {
       }
     },
     onClick(locationId) {
-      console.log(locationId)
       this.currentId = locationId
       this.rotateEnvironment(this.currentLocation.rotation)
     },
     rotateEnvironment(rad) {
       this.$refs.scene.parent.backgroundRotation.y = rad
     },
+    changeCursor(ev) {
+      ev.target.style.cursor = "pointer";
+    },
+    resetCursor(ev) {
+      ev.target.style.cursor = "default";},
     handleScroll(event) {
       if (event.deltaY < 0) {
         this.zoom += 0.1;
@@ -159,8 +164,16 @@ export default {
       console.log("zoom level: ", this.zoom)
 
     }
+
   }
 }
 </script>
 
-<style></style>
+<style>
+
+.clickable {
+  cursor: pointer;
+}
+
+
+</style>

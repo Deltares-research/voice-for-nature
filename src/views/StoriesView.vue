@@ -4,41 +4,49 @@
       Deltapond
     </h2>
     <div class="history" md="12" color="white">
-      <div v-html="story" />
+      <div v-html="getStory()" />
     </div>
   </v-card>
 </template>
 
 <script>
 import _ from 'lodash'
-// let files = require.context('../components/stories', true, /.md$/)
-// const filenames = files.keys()
-// const chapters = []
-// filenames.forEach(file => {
-//   const name = /(?<=\/)(.*?)(?=\.)/g.exec(file)
-//   chapters.push({ name: name, text: files(file).default })
-// })
 export default {
   name: 'StoriesView',
-  computed: {
-    story () {
-      console.log(this.$router)
-      const story = _.get(this.$route, 'params.storyName', 'fallback')
+  data() {
+    return {
+
+    }
+  },
+
+  methods: {
+    getStory() { // get story md file
+      let story = _.get(this.$route, 'params.storyName', 'fallback')
+      if (story === "stories") {
+        story = this.fallback_story
+      }
+      this.fallback_story = story
       return require(`../components/stories/${story}.md`).default
     }
+  },
+  computed: {
+    fallback_story() {
+      return "fallback"
+    }
   }
+
 }
 </script>
 
 <style>
 .stories {
-   position: sticky;
-   top: 0;
-   z-index: 2;
-   display: block;
-   justify-content: right;
-   height: 100%;
-   max-height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: block;
+  justify-content: right;
+  height: 100%;
+  max-height: 100vh;
 }
 
 .text {
@@ -46,7 +54,7 @@ export default {
   overflow-y: scroll;
 }
 
-.video-wrap video{
+.video-wrap video {
   width: 100%;
 }
 </style>

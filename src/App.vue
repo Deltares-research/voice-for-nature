@@ -12,7 +12,7 @@
             :key="item"
             :text="item"
             :value="item"
-            :to="`./${item}`"
+            :to="`/${item}`"
           ></v-tab>
         </v-tabs>
         <v-tabs-window class="rel-height">
@@ -37,8 +37,30 @@ export default {
   data: () => ({
     tabs: ["stories", "chat"],
     tab: "stories",
-    folded: true
+    folded: true,
+    prior_story: ""
   }),
+
+  watch: {
+    $route(to) {
+      if (to.path.includes("stories")) {       
+        // Remeber the story so when user clicks on chat and then back to stories they see the story last viewed
+        if (!to.path.endsWith("/stories")) {
+          const pathArray = to.path.split("/")
+          
+          this.prior_story= pathArray.at(-1)
+        }
+        if (this.prior_story) {
+          this.$router.push(`/stories/${this.prior_story}`)
+        }
+        this.tab = "stories"
+
+      }
+      else if (to.path.includes("chat")) {
+        this.tab = "chat"
+      }
+    }
+  },
 
   mounted () {
   }
