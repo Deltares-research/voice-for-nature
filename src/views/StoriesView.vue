@@ -13,11 +13,12 @@
 import _ from 'lodash'
 export default {
   name: 'StoriesView',
-  data () {
-  return {
-    fallback_story: "fallback", 
-  }},
-  
+  data() {
+    return {
+
+    }
+  },
+
   methods: {
     getStory() {
       let story = _.get(this.$route, 'params.storyName', 'fallback')
@@ -27,19 +28,25 @@ export default {
       this.fallback_story = story
       return require(`../components/stories/${story}.md`).default
     }
+  },
+  computed: {
+    fallback_story() {
+      return "fallback"
+    }
   }
+
 }
 </script>
 
 <style>
 .stories {
-   position: sticky;
-   top: 0;
-   z-index: 2;
-   display: block;
-   justify-content: right;
-   height: 100%;
-   max-height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: block;
+  justify-content: right;
+  height: 100%;
+  max-height: 100vh;
 }
 
 .text {
@@ -47,7 +54,7 @@ export default {
   overflow-y: scroll;
 }
 
-.video-wrap video{
+.video-wrap video {
   width: 100%;
 }
 </style>
