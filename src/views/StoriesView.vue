@@ -20,7 +20,7 @@ export default {
   },
 
   methods: {
-    getStory() {
+    getStory() { // get story md file
       let story = _.get(this.$route, 'params.storyName', 'fallback')
       if (story === "stories") {
         story = this.fallback_story
