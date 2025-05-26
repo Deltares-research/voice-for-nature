@@ -42,8 +42,6 @@
             :position="[350, -220, 620]"
             :scale="[20, 20, 20]"
             @click="onFishClick"
-            @pointerover="onFishPointerOver"
-            @pointerout="onFishPointerOut"
           />
         </Suspense>
         <Suspense v-if="currentId === 'loc2_pavilion'">
@@ -165,6 +163,25 @@ export default {
   methods: {
     loadFishModel() {
       useGLTF('../3dmodels/Fish.glb').then((gltf) => {
+        gltf.scene.traverse((child) => {
+          if (child.isMesh) {
+            // Make it interactive
+            child.castShadow = true
+            child.receiveShadow = true
+
+            // Attach pointer events directly to the mesh
+            child.onPointerOver = () => {
+              document.body.style.cursor = 'pointer'
+            }
+            child.onPointerOut = () => {
+              document.body.style.cursor = 'default'
+            }
+            child.onClick = () => {
+              this.onFishClick()
+            }
+          }
+        })
+
         this.fish = gltf
       })
     },
