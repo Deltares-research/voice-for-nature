@@ -42,8 +42,8 @@
             :position="[350, -220, 620]"
             :scale="[20, 20, 20]"
             @click="onFishClick"
-            @pointerover="() => { document.body.style.cursor = 'pointer' }"
-            @pointerout="() => { document.body.style.cursor = 'default' }"
+            @pointerover="onFishPointerOver"
+            @pointerout="onFishPointerOut"
           />
         </Suspense>
         <Suspense v-if="currentId === 'loc2_pavilion'">
@@ -171,6 +171,16 @@ export default {
     onFishClick() {
       console.log('🐟 Fish clicked!')
       alert('You clicked the fish!')
+    },
+    onFishPointerOver() {
+      if (typeof document !== 'undefined') {
+        document.body.style.cursor = 'pointer'
+      }
+    },
+    onFishPointerOut() {
+      if (typeof document !== 'undefined') {
+        document.body.style.cursor = 'default'
+      }
     },
     onPointerEnter(ev) {
       if (ev) {
