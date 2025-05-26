@@ -28,7 +28,7 @@
         <Environment
           ref = "env"
           :background="true"
-          :files=currenLocationFiles 
+          :files=currentLocationFiles 
         />
       </Suspense>
       <TresScene
@@ -123,7 +123,7 @@ export default {
     currentLocation () {
       return this.locations.find(loc => loc.id === this.currentId)
     },
-    currenLocationFiles () {
+    currentLocationFiles () {
       return [
         `../360photos/${this.currentLocation.id}/px.jpg`,
         `../360photos/${this.currentLocation.id}/nx.jpg`,
