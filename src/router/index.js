@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import StoriesView from '../views/StoriesView.vue'
-import ChatBox from '../views/ChatBox.vue'
+import ChatBoxView from '../views/ChatBoxView.vue'
 
 const routes = [
   {
@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/chat',
     name: 'chat',
-    component: ChatBox
+    component: ChatBoxView
   }
 ]
 
