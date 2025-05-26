@@ -36,11 +36,14 @@
         <TresDirectionalLight
           :position="[0, 8, 4]"
         />
-        <Suspense v-if="currentId === 'loc1_road'">
-          <GLTFModel
-            path="../3dmodels/Fish.glb"
+        <Suspense v-if="currentId === 'loc1_road' && fish?.scene">
+          <primitive
+            :object="fish.scene"
             :position="[350, -220, 620]"
             :scale="[20, 20, 20]"
+            @click="onFishClick"
+            @pointerover="() => { document.body.style.cursor = 'pointer' }"
+            @pointerout="() => { document.body.style.cursor = 'default' }"
           />
         </Suspense>
         <Suspense v-if="currentId === 'loc2_pavilion'">
@@ -69,8 +72,9 @@
 </template>
 
 <script>
-import { OrbitControls, Environment, Text3D, GLTFModel } from '@tresjs/cientos'
+import { OrbitControls, Environment, Text3D, GLTFModel, useGLTF } from '@tresjs/cientos'
 import { TresCanvas } from '@tresjs/core'
+import { shallowRef, nextTick } from 'vue'
 
 export default {
   name: 'BackgroundViewer',
@@ -86,6 +90,8 @@ export default {
     return {
       fontPath: 'https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json',
       currentId: "loc1_road",
+      fish: shallowRef(null),
+      hoveringFish: false,
       locations: [
         {
           id: "loc1_road",
@@ -142,10 +148,30 @@ export default {
     }
   },
   mounted () {
+    nextTick(() => {
+      this.rotateEnvironment(this.currentLocation.rotation)
+    })
     console.log(this.$refs)
     this.rotateEnvironment(this.currentLocation.rotation)
+    this.loadFishModel()
+  },
+  watch: {
+    currentId(newId) {
+      if (newId === 'loc1_road' && !this.fish) {
+        this.loadFishModel()
+      }
+    },
   },
   methods: {
+    loadFishModel() {
+      useGLTF('../3dmodels/Fish.glb').then((gltf) => {
+        this.fish = gltf
+      })
+    },
+    onFishClick() {
+      console.log('🐟 Fish clicked!')
+      alert('You clicked the fish!')
+    },
     onPointerEnter(ev) {
       if (ev) {
         ev.object.material.color.set('#1CEDDC');
