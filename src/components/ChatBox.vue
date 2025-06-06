@@ -4,6 +4,7 @@
         v-model='text'
         placeholder='Write a message'
         type='text'
+
     />
     <button :disabled='text === ""'>Send</button>
   </form>
@@ -36,6 +37,7 @@ export default {
 input {
   width: min(100%, 20rem);
   flex-grow: 1;
+  padding: 0.2rem
   
 }
 

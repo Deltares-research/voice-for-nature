@@ -1,6 +1,6 @@
 
 <template>
-  <v-card ref="scrollCardChat" class="pa-3 ma-3" outlined color="rgba(0, 0, 0, 0.5)" theme="dark">
+  <v-card ref="scrollChat" class="pa-3 ma-3" outlined color="rgba(0, 0, 0, 0.5)" theme="dark">
     <h3>
       Hello, my name is Pond. Delta, Pond.
     </h3>
@@ -13,6 +13,7 @@
           />
       </div>
       <ChatBox
+        ref="chatbox"
         class='chat-box'
         @submit='onSubmit'
     />
@@ -54,14 +55,24 @@ export default {
 
     sendMessage(message) {
       this.messages.push(message)
-      this.$nextTick(() => {
-          const container = this.$refs.scrollCardChat;
-          container.scrollTop = container.scrollHeight
-          console.log(container )
-        })
+      // this.$nextTick(() => {
+      //     const container = this.$refs.scrollCardChat;
+      //     container.scrollTop = container.scrollHeight
+      //     console.log(container )
+      //   })
     }
     
 
+  },
+  watch: {
+    messages() {
+      this.$nextTick(() => {
+        const chatbox = this.$refs.chatbox;
+        if (chatbox) {
+          chatbox.scrollIntoView({behavior: 'smooth'})
+        }
+      })
+    }
   },
   data: () => ({
     user: undefined,
@@ -75,7 +86,7 @@ export default {
 .messages {
   flex-grow: 1;
   overflow: auto;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .message + .message {
@@ -87,9 +98,8 @@ export default {
 }
 
 .pa-3.ma-3 {
-  margin-bottom: 1rem;
+  flex: 1;
   overflow-y: auto;
-  max-height: 300px;
 
 }
 </style>
