@@ -4,79 +4,31 @@
     <h3>
       Hello, my name is Pond. Delta, Pond.
     </h3>
-    <div class="messages">
-    <ChatMessage v-for='message in messages'
-          :key='message.id'
-          :class='["message", { right: message.isMine }]'
-          :dark='message.isMine'
-          :text='message.text'
-          />
-      </div>
-      <ChatBox
-        ref="chatbox"
-        class='chat-box'
-        @submit='onSubmit'
-    />
+     <deep-chat
+    :demo="true"
+    :textInput="{ placeholder: { text: 'Welcome to the demo!' } }"
+    :history="history"
+    style="height: 100%; flex: 1; overflow-y: auto;"
+  />
+   
 
 
   </v-card>
 </template>
 <script>
-import ChatMessage from '@/components/ChatMessage.vue';
-import ChatBox from '@/components/ChatBox.vue';
-import generateUID from '@/utils/uid.js'
+import 'deep-chat';
 export default {
   name: 'ChatBoxView',
-  components: {
-    ChatBox,
-    ChatMessage
-  },
-  created () {
-    this.getChat()
-  },
-  methods: {
-    
-    getChat() {
-    },
-  
-    onSubmit(event, text) {
-      event.preventDefault();
-      
-      if (text && text.trim() !== '') {
-        this.sendMessage({
-        text,
-        id: generateUID(),
-        isMine: true 
-      });
-        
-      }
-      
-    },
 
-    sendMessage(message) {
-      this.messages.push(message)
-      // this.$nextTick(() => {
-      //     const container = this.$refs.scrollCardChat;
-      //     container.scrollTop = container.scrollHeight
-      //     console.log(container )
-      //   })
-    }
-    
-
-  },
-  watch: {
-    messages() {
-      this.$nextTick(() => {
-        const chatbox = this.$refs.chatbox;
-        if (chatbox) {
-          chatbox.scrollIntoView({behavior: 'smooth'})
-        }
-      })
-    }
-  },
+ 
   data: () => ({
     user: undefined,
-    messages: []
+    messages: [],
+    history: [
+      { role: 'user', text: 'Hey, how are you today?' },
+      { role: 'ai', text: 'I am doing very well!' },
+    ],
+
   })
   
 }
@@ -100,6 +52,5 @@ export default {
 .pa-3.ma-3 {
   flex: 1;
   overflow-y: auto;
-
 }
 </style>
