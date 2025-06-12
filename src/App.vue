@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <background-viewer />
-      <v-card class="ma-3 information" :height="folded? '300px' : '100%'" outlined color="rgba(0, 0, 0, 0.5)" theme="dark">
+      <v-card class="pa-3 ma-3" outlined color="rgba(0, 0, 0, 0.5)" theme="dark">
         <v-tabs
           v-model="tab"
           align-tabs="title"
@@ -19,7 +19,6 @@
             <router-view></router-view>
         </v-tabs-window>
       </v-card>
-      <v-btn class="ma-3" :icon="folded ? 'mdi-chevron-down' : 'mdi-chevron-up'" @click="folded= !folded"></v-btn>
     </v-main>
   </v-app>
 </template>
@@ -37,7 +36,6 @@ export default {
   data: () => ({
     tabs: ["stories", "chat"],
     tab: "stories",
-    folded: true,
     prior_story: ""
   }),
 
@@ -73,13 +71,17 @@ html {
   overflow-y: hidden;
 }
 
-.information {
+.pa-3.ma-3 {
   width: 30vw;
   min-width: 500px;
-  max-height: 90vh;
+  height: 400px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column; 
 }
 
 .rel-height {
-  height: 100%;
+  /* flex: 1; */
+  max-height: 100%;
 }
 </style>
