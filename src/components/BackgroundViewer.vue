@@ -89,6 +89,7 @@ export default {
       fontPath: 'https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json',
       currentId: "loc1_road",
       fish: shallowRef(null),
+      fishInteractivityInitialized: false, // ✅ New flag
       hoveringFish: false,
       locations: [
         {
@@ -163,24 +164,29 @@ export default {
   methods: {
     loadFishModel() {
       useGLTF('../3dmodels/Fish.glb').then((gltf) => {
-        gltf.scene.traverse((child) => {
-          if (child.isMesh) {
-            // Make it interactive
-            child.castShadow = true
-            child.receiveShadow = true
+        if (!this.fishInteractivityInitialized) {
+          gltf.scene.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true
+              child.receiveShadow = true
 
-            // Attach pointer events directly to the mesh
-            child.onPointerOver = () => {
-              document.body.style.cursor = 'pointer'
+              // ✅ Only add listeners once
+              child.onPointerOver = () => {
+                document.body.style.cursor = 'pointer'
+                child.material.emissive?.set?.('#695903')
+              }
+              child.onPointerOut = () => {
+                document.body.style.cursor = 'default'
+                child.material.emissive?.set?.('#000000')
+              }
+              child.onClick = () => {
+                this.onFishClick()
+              }
             }
-            child.onPointerOut = () => {
-              document.body.style.cursor = 'default'
-            }
-            child.onClick = () => {
-              this.onFishClick()
-            }
-          }
-        })
+          })
+
+          this.fishInteractivityInitialized = true
+        }
 
         this.fish = gltf
       })
